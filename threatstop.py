@@ -1,11 +1,14 @@
+
 import subprocess
 import re
 
+# Execute dig command
 def parse(cmd):
         cmd=cmd.split()
         proc=subprocess.check_output(cmd)
         return proc
 
+# IP address are extracted from the dig output
 def extract_ip(proc, flag=False):
         if flag:
                 regex = "((\d{1,3}\.){3}.\d{1,3})"
@@ -15,20 +18,7 @@ def extract_ip(proc, flag=False):
         ip_address=[i[0] for i in ip]
         return ip_address
 
-def get_ip(string):
-        p = "((\d{1,3}\.){3}.\d{1,3})"
-        new = re.findall(p, string)
-        out = [i[0] for i in new]
-        return out
-
-
-def get_ip(string):
-        p = "((\d{1,3}\.){3}.\d{1,3})"
-        new = re.findall(p, string)
-        out = [i[0] for i in new]
-        return out
-
-
+# Push the rules in the IP_Table
 def ip_tables(ip_address):
         string = parse(cmd='sudo iptables -L')
         exists_ip = extract_ip(string, flag=True)
